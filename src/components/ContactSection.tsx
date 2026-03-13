@@ -1,4 +1,4 @@
-import { MapPin, Phone, Mail, Globe, Send } from "lucide-react";
+import { MapPin, Phone, Mail, Globe, Send, MessageCircle } from "lucide-react";
 import { useState } from "react";
 import { motion } from "framer-motion";
 
@@ -23,8 +23,12 @@ const ContactSection = () => {
   ];
 
   return (
-    <section id="contact" className="section-padding bg-background">
-      <div className="container mx-auto">
+    <section id="contact" className="section-padding bg-background relative overflow-hidden">
+      {/* Decorative */}
+      <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
+      <div className="absolute bottom-0 left-0 w-72 h-72 bg-accent/5 rounded-full blur-3xl" />
+
+      <div className="container mx-auto relative">
         <motion.div
           className="text-center max-w-3xl mx-auto mb-16"
           initial={{ opacity: 0, y: 30 }}
@@ -32,7 +36,15 @@ const ContactSection = () => {
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.6 }}
         >
-          <span className="text-accent font-semibold tracking-widest uppercase text-sm">Contact Us</span>
+          <motion.div
+            className="inline-flex items-center gap-2 bg-primary/10 rounded-full px-4 py-1.5 mb-4"
+            initial={{ scale: 0.8, opacity: 0 }}
+            whileInView={{ scale: 1, opacity: 1 }}
+            viewport={{ once: true }}
+          >
+            <MessageCircle className="w-4 h-4 text-primary" />
+            <span className="text-primary font-semibold tracking-widest uppercase text-xs">Contact Us</span>
+          </motion.div>
           <h2 className="text-3xl md:text-5xl font-bold text-foreground mt-3 mb-6 font-display">
             Get in <span className="text-gradient">Touch</span>
           </h2>
@@ -41,30 +53,53 @@ const ContactSection = () => {
         <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
           {/* Form */}
           <motion.div
-            className="bg-card rounded-3xl shadow-card p-8 md:p-10 border border-border"
+            className="relative bg-card rounded-3xl shadow-card p-8 md:p-10 border border-border overflow-hidden"
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.6 }}
           >
-            <h3 className="text-2xl font-bold text-foreground mb-6 font-display">Send an Enquiry</h3>
-            <form onSubmit={handleSubmit} className="space-y-5">
-              <input type="text" placeholder="Your Name" required value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} className="w-full px-5 py-3.5 rounded-xl bg-secondary/50 border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all" />
+            {/* Corner glow */}
+            <div className="absolute -top-20 -right-20 w-40 h-40 bg-primary/10 rounded-full blur-3xl" />
+            
+            <h3 className="text-2xl font-bold text-foreground mb-6 font-display relative z-10">Send an Enquiry</h3>
+            <form onSubmit={handleSubmit} className="space-y-5 relative z-10">
+              <motion.input
+                type="text" placeholder="Your Name" required value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                className="w-full px-5 py-3.5 rounded-xl bg-secondary/50 border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/30 transition-all"
+                whileFocus={{ scale: 1.01 }}
+              />
               <div className="grid grid-cols-2 gap-4">
-                <input type="tel" placeholder="Phone Number" required value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} className="w-full px-5 py-3.5 rounded-xl bg-secondary/50 border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all" />
-                <input type="email" placeholder="Email" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} className="w-full px-5 py-3.5 rounded-xl bg-secondary/50 border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all" />
+                <motion.input
+                  type="tel" placeholder="Phone Number" required value={formData.phone}
+                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  className="w-full px-5 py-3.5 rounded-xl bg-secondary/50 border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/30 transition-all"
+                  whileFocus={{ scale: 1.01 }}
+                />
+                <motion.input
+                  type="email" placeholder="Email" value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  className="w-full px-5 py-3.5 rounded-xl bg-secondary/50 border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/30 transition-all"
+                  whileFocus={{ scale: 1.01 }}
+                />
               </div>
-              <select value={formData.program} onChange={(e) => setFormData({ ...formData, program: e.target.value })} className="w-full px-5 py-3.5 rounded-xl bg-secondary/50 border border-border text-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all">
+              <select value={formData.program} onChange={(e) => setFormData({ ...formData, program: e.target.value })} className="w-full px-5 py-3.5 rounded-xl bg-secondary/50 border border-border text-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/30 transition-all">
                 <option value="">Select Program</option>
                 <option value="Travel & Tourism Business">Travel & Tourism Business (Business Oriented)</option>
                 <option value="Tourism & Hotel Management">Tourism & Hotel Management (Job Oriented)</option>
               </select>
-              <textarea placeholder="Your Message" rows={3} value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })} className="w-full px-5 py-3.5 rounded-xl bg-secondary/50 border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all resize-none" />
+              <motion.textarea
+                placeholder="Your Message" rows={3} value={formData.message}
+                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                className="w-full px-5 py-3.5 rounded-xl bg-secondary/50 border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/30 transition-all resize-none"
+                whileFocus={{ scale: 1.01 }}
+              />
               <motion.button
                 type="submit"
-                whileHover={{ scale: 1.02 }}
+                whileHover={{ scale: 1.02, boxShadow: "var(--shadow-elevated)" }}
                 whileTap={{ scale: 0.98 }}
-                className="w-full flex items-center justify-center gap-2 bg-primary-gradient text-primary-foreground px-8 py-4 rounded-xl font-semibold text-lg hover:shadow-elevated transition-all hover:opacity-90"
+                className="w-full flex items-center justify-center gap-2 bg-primary-gradient text-primary-foreground px-8 py-4 rounded-xl font-semibold text-lg transition-all"
               >
                 <Send className="w-5 h-5" />
                 Send via WhatsApp
@@ -83,11 +118,12 @@ const ContactSection = () => {
             {contactInfo.map((item, i) => (
               <motion.div
                 key={item.title}
-                className="flex items-start gap-4"
+                className="flex items-start gap-4 p-4 rounded-xl hover:bg-secondary/50 transition-colors"
                 initial={{ opacity: 0, x: 20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1, duration: 0.4 }}
+                whileHover={{ x: 5 }}
               >
                 <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
                   <item.icon className="w-6 h-6 text-primary" />
@@ -102,11 +138,12 @@ const ContactSection = () => {
             {locations.map((loc, i) => (
               <motion.div
                 key={loc.name}
-                className="flex items-start gap-4"
+                className="flex items-start gap-4 p-4 rounded-xl hover:bg-secondary/50 transition-colors"
                 initial={{ opacity: 0, x: 20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: (contactInfo.length + i) * 0.1, duration: 0.4 }}
+                whileHover={{ x: 5 }}
               >
                 <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center shrink-0">
                   <MapPin className="w-6 h-6 text-accent" />
@@ -120,6 +157,23 @@ const ContactSection = () => {
           </motion.div>
         </div>
       </div>
+
+      {/* Floating WhatsApp button */}
+      <motion.a
+        href="https://wa.me/917559944728"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-[#25D366] flex items-center justify-center shadow-elevated hover:shadow-glow transition-shadow"
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.95 }}
+        animate={{ y: [0, -5, 0] }}
+        transition={{ y: { duration: 2, repeat: Infinity } }}
+        aria-label="Chat on WhatsApp"
+      >
+        <svg viewBox="0 0 24 24" className="w-7 h-7 fill-primary-foreground">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+      </motion.a>
     </section>
   );
 };
