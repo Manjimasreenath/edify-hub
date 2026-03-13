@@ -6,15 +6,19 @@ const AdmissionsSection = () => {
     <section id="admissions" className="section-padding bg-primary-gradient relative overflow-hidden">
       {/* Decorative circles */}
       <motion.div
-        className="absolute -top-20 -right-20 w-80 h-80 rounded-full bg-accent/5"
-        animate={{ scale: [1, 1.1, 1] }}
-        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute -top-20 -right-20 w-80 h-80 rounded-full border border-primary-foreground/10"
+        animate={{ rotate: 360 }}
+        transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
       />
       <motion.div
-        className="absolute -bottom-32 -left-32 w-96 h-96 rounded-full bg-accent/5"
-        animate={{ scale: [1, 1.15, 1] }}
-        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+        className="absolute -bottom-32 -left-32 w-96 h-96 rounded-full border border-primary-foreground/10"
+        animate={{ rotate: -360 }}
+        transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
       />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/5 rounded-full blur-3xl" />
+
+      {/* Dot pattern */}
+      <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: "radial-gradient(circle, hsl(0 0% 100%) 1px, transparent 1px)", backgroundSize: "24px 24px" }} />
 
       <div className="container mx-auto relative">
         <motion.div
@@ -24,7 +28,15 @@ const AdmissionsSection = () => {
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.6 }}
         >
-          <span className="text-accent font-semibold tracking-widest uppercase text-sm">Admissions</span>
+          <motion.div
+            className="inline-flex items-center gap-2 bg-accent/15 rounded-full px-4 py-1.5 mb-4 border border-accent/20"
+            initial={{ scale: 0.8, opacity: 0 }}
+            whileInView={{ scale: 1, opacity: 1 }}
+            viewport={{ once: true }}
+          >
+            <GraduationCap className="w-4 h-4 text-accent" />
+            <span className="text-accent font-semibold tracking-widest uppercase text-xs">Admissions</span>
+          </motion.div>
           <h2 className="text-3xl md:text-5xl font-bold text-primary-foreground mt-3 mb-6 font-display">
             Start Your Journey <span className="text-accent">Today</span>
           </h2>
@@ -41,21 +53,24 @@ const AdmissionsSection = () => {
           ].map((item, i) => (
             <motion.div
               key={item.title}
-              className="bg-primary-foreground/10 backdrop-blur-sm border border-primary-foreground/20 rounded-2xl p-8 text-center hover:bg-primary-foreground/15 transition-colors"
+              className="relative bg-primary-foreground/10 backdrop-blur-sm border border-primary-foreground/20 rounded-2xl p-8 text-center hover:bg-primary-foreground/15 transition-all overflow-hidden group"
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.15 }}
               whileHover={{ y: -6, scale: 1.02 }}
             >
+              {/* Hover glow */}
+              <div className="absolute inset-0 bg-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              
               <motion.div
-                className="w-16 h-16 rounded-full bg-accent/20 flex items-center justify-center mx-auto mb-5"
-                whileHover={{ rotate: 10 }}
+                className="w-16 h-16 rounded-full bg-accent/20 flex items-center justify-center mx-auto mb-5 relative z-10"
+                whileHover={{ rotate: 10, scale: 1.1 }}
               >
                 <item.icon className="w-8 h-8 text-accent" />
               </motion.div>
-              <h3 className="text-xl font-bold text-primary-foreground mb-3 font-display">{item.title}</h3>
-              <p className="text-primary-foreground/70 text-sm leading-relaxed">{item.desc}</p>
+              <h3 className="text-xl font-bold text-primary-foreground mb-3 font-display relative z-10">{item.title}</h3>
+              <p className="text-primary-foreground/70 text-sm leading-relaxed relative z-10">{item.desc}</p>
             </motion.div>
           ))}
         </div>
