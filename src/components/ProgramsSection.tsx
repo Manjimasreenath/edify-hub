@@ -1,4 +1,5 @@
 import { Briefcase, Hotel, Check, ArrowRight } from "lucide-react";
+import { motion } from "framer-motion";
 import travelImage from "@/assets/travel-business-image.jpg";
 import hospitalityImage from "@/assets/hospitality-image.jpg";
 
@@ -9,8 +10,7 @@ const programs = [
     subtitle: "Business Oriented Program",
     image: travelImage,
     duration: "1 Year with Internship",
-    description:
-      "Start and manage your own travel business. Complete practical training on establishing, operating, and growing a travel enterprise successfully.",
+    description: "Start and manage your own travel business. Complete practical training on establishing, operating, and growing a travel enterprise successfully.",
     highlights: [
       "Complete travel business setup training",
       "Legal registration, GST & licensing guidance",
@@ -27,8 +27,7 @@ const programs = [
     subtitle: "Job Oriented Program",
     image: hospitalityImage,
     duration: "1 Year with Internship",
-    description:
-      "Prepare for successful employment in the travel, tourism, and hospitality industry with structured classroom learning and real-world exposure.",
+    description: "Prepare for successful employment in the travel, tourism, and hospitality industry with structured classroom learning and real-world exposure.",
     highlights: [
       "Hotel management & tourism training",
       "English communication development",
@@ -45,7 +44,13 @@ const ProgramsSection = () => {
   return (
     <section id="programs" className="section-padding bg-secondary/30">
       <div className="container mx-auto">
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <motion.div
+          className="text-center max-w-3xl mx-auto mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.6 }}
+        >
           <span className="text-accent font-semibold tracking-widest uppercase text-sm">Our Programs</span>
           <h2 className="text-3xl md:text-5xl font-bold text-foreground mt-3 mb-6 font-display">
             Diploma in <span className="text-gradient">1 Year</span>
@@ -53,13 +58,18 @@ const ProgramsSection = () => {
           <p className="text-muted-foreground text-lg">
             Two specialized diploma programs designed to launch your career in travel and hospitality.
           </p>
-        </div>
+        </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
-          {programs.map((program) => (
-            <div
+          {programs.map((program, idx) => (
+            <motion.div
               key={program.title}
               className="bg-card rounded-3xl overflow-hidden shadow-card hover:shadow-elevated transition-all duration-500 group"
+              initial={{ opacity: 0, x: idx === 0 ? -50 : 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.7, delay: idx * 0.2 }}
+              whileHover={{ y: -8 }}
             >
               {/* Image */}
               <div className="relative h-56 overflow-hidden">
@@ -110,33 +120,48 @@ const ProgramsSection = () => {
                   </div>
                 </div>
 
-                <a
+                <motion.a
                   href="#contact"
+                  whileHover={{ x: 5 }}
                   className={`mt-6 inline-flex items-center gap-2 font-semibold transition-colors ${
                     program.color === "primary" ? "text-primary hover:text-primary/80" : "text-accent hover:text-accent/80"
                   }`}
                 >
                   Enquire Now <ArrowRight className="w-4 h-4" />
-                </a>
+                </motion.a>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
 
         {/* Degree programs */}
-        <div className="mt-16 max-w-4xl mx-auto bg-primary-gradient rounded-3xl p-8 md:p-12 text-center">
+        <motion.div
+          className="mt-16 max-w-4xl mx-auto bg-primary-gradient rounded-3xl p-8 md:p-12 text-center"
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
           <h3 className="text-2xl md:text-3xl font-bold text-primary-foreground font-display mb-4">
             Complete Your Degree & Masters
           </h3>
           <p className="text-primary-foreground/70 mb-8">Advance your education with our partner university programs</p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {["BTS", "BATS", "BAVTM", "MTTM"].map((degree) => (
-              <div key={degree} className="bg-primary-foreground/10 backdrop-blur-sm rounded-xl px-6 py-4 border border-primary-foreground/20">
+            {["BTS", "BATS", "BAVTM", "MTTM"].map((degree, i) => (
+              <motion.div
+                key={degree}
+                className="bg-primary-foreground/10 backdrop-blur-sm rounded-xl px-6 py-4 border border-primary-foreground/20"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1, duration: 0.4 }}
+                whileHover={{ scale: 1.08, backgroundColor: "rgba(255,255,255,0.15)" }}
+              >
                 <span className="text-primary-foreground font-bold text-lg">{degree}</span>
-              </div>
+              </motion.div>
             ))}
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
