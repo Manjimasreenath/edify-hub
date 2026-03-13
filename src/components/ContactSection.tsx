@@ -53,57 +53,98 @@ const ContactSection = () => {
         <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
           {/* Form */}
           <motion.div
-            className="relative bg-card rounded-3xl shadow-card p-8 md:p-10 border border-border overflow-hidden"
+            className="relative bg-card rounded-3xl p-8 md:p-10 border border-border overflow-hidden"
+            style={{ boxShadow: "var(--shadow-elevated)" }}
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.6 }}
           >
-            {/* Corner glow */}
-            <div className="absolute -top-20 -right-20 w-40 h-40 bg-primary/10 rounded-full blur-3xl" />
-            
-            <h3 className="text-2xl font-bold text-foreground mb-6 font-display relative z-10">Send an Enquiry</h3>
-            <form onSubmit={handleSubmit} className="space-y-5 relative z-10">
-              <motion.input
-                type="text" placeholder="Your Name" required value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                className="w-full px-5 py-3.5 rounded-xl bg-secondary/50 border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/30 transition-all"
-                whileFocus={{ scale: 1.01 }}
-              />
-              <div className="grid grid-cols-2 gap-4">
+            {/* Corner glows */}
+            <div className="absolute -top-24 -right-24 w-48 h-48 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute -bottom-16 -left-16 w-32 h-32 bg-accent/10 rounded-full blur-3xl pointer-events-none" />
+
+            {/* Header with accent bar */}
+            <div className="relative z-10 mb-8">
+              <div className="w-12 h-1 bg-accent rounded-full mb-4" />
+              <h3 className="text-2xl font-bold text-foreground font-display">Send an Enquiry</h3>
+              <p className="text-muted-foreground text-sm mt-2">We'll get back to you within 24 hours</p>
+            </div>
+
+            <form onSubmit={handleSubmit} className="space-y-4 relative z-10">
+              {/* Name */}
+              <div className="space-y-1.5">
+                <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Full Name *</label>
                 <motion.input
-                  type="tel" placeholder="Phone Number" required value={formData.phone}
-                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  className="w-full px-5 py-3.5 rounded-xl bg-secondary/50 border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/30 transition-all"
-                  whileFocus={{ scale: 1.01 }}
-                />
-                <motion.input
-                  type="email" placeholder="Email" value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full px-5 py-3.5 rounded-xl bg-secondary/50 border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/30 transition-all"
+                  type="text" placeholder="Enter your full name" required value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  className="w-full px-4 py-3 rounded-xl bg-secondary/60 border border-border text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary/40 focus:bg-background transition-all text-sm"
                   whileFocus={{ scale: 1.01 }}
                 />
               </div>
-              <select value={formData.program} onChange={(e) => setFormData({ ...formData, program: e.target.value })} className="w-full px-5 py-3.5 rounded-xl bg-secondary/50 border border-border text-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/30 transition-all">
-                <option value="">Select Program</option>
-                <option value="Travel & Tourism Business">Travel & Tourism Business (Business Oriented)</option>
-                <option value="Tourism & Hotel Management">Tourism & Hotel Management (Job Oriented)</option>
-              </select>
-              <motion.textarea
-                placeholder="Your Message" rows={3} value={formData.message}
-                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                className="w-full px-5 py-3.5 rounded-xl bg-secondary/50 border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/30 transition-all resize-none"
-                whileFocus={{ scale: 1.01 }}
-              />
+
+              {/* Phone + Email row */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-1.5">
+                  <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Phone *</label>
+                  <motion.input
+                    type="tel" placeholder="+91 XXXXX XXXXX" required value={formData.phone}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    className="w-full px-4 py-3 rounded-xl bg-secondary/60 border border-border text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary/40 focus:bg-background transition-all text-sm"
+                    whileFocus={{ scale: 1.01 }}
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Email</label>
+                  <motion.input
+                    type="email" placeholder="your@email.com" value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    className="w-full px-4 py-3 rounded-xl bg-secondary/60 border border-border text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary/40 focus:bg-background transition-all text-sm"
+                    whileFocus={{ scale: 1.01 }}
+                  />
+                </div>
+              </div>
+
+              {/* Program select */}
+              <div className="space-y-1.5">
+                <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Program of Interest</label>
+                <select
+                  value={formData.program}
+                  onChange={(e) => setFormData({ ...formData, program: e.target.value })}
+                  className="w-full px-4 py-3 rounded-xl bg-secondary/60 border border-border text-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary/40 focus:bg-background transition-all text-sm appearance-none cursor-pointer"
+                  style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 16px center' }}
+                >
+                  <option value="">Select a program...</option>
+                  <option value="Travel & Tourism Business">Travel & Tourism Business (Business Oriented)</option>
+                  <option value="Tourism & Hotel Management">Tourism & Hotel Management (Job Oriented)</option>
+                </select>
+              </div>
+
+              {/* Message */}
+              <div className="space-y-1.5">
+                <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Message</label>
+                <motion.textarea
+                  placeholder="Tell us about your interests..." rows={3} value={formData.message}
+                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                  className="w-full px-4 py-3 rounded-xl bg-secondary/60 border border-border text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary/40 focus:bg-background transition-all resize-none text-sm"
+                  whileFocus={{ scale: 1.01 }}
+                />
+              </div>
+
+              {/* Submit */}
               <motion.button
                 type="submit"
-                whileHover={{ scale: 1.02, boxShadow: "var(--shadow-elevated)" }}
+                whileHover={{ scale: 1.02, boxShadow: "var(--shadow-glow)" }}
                 whileTap={{ scale: 0.98 }}
-                className="w-full flex items-center justify-center gap-2 bg-primary-gradient text-primary-foreground px-8 py-4 rounded-xl font-semibold text-lg transition-all"
+                className="w-full flex items-center justify-center gap-2.5 bg-primary-gradient text-primary-foreground px-8 py-4 rounded-xl font-semibold text-base transition-all mt-2 group"
               >
-                <Send className="w-5 h-5" />
+                <Send className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 Send via WhatsApp
               </motion.button>
+
+              <p className="text-center text-xs text-muted-foreground/70 mt-2">
+                Your enquiry will be sent securely via WhatsApp
+              </p>
             </form>
           </motion.div>
 
