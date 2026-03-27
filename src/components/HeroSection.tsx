@@ -63,7 +63,7 @@ const HeroSection = () => {
             transition={{ duration: 0.7, delay: 0.3 }}
             className="text-lg md:text-xl text-primary-foreground/75 mb-10 max-w-2xl leading-relaxed"
           >
-            Build your Travel Business or Shine in Global Hospitality. Your journey starts here at Bucket List Future School & Holidays.
+            Build your Travel Business or Shine in Global Hospitality. Your journey starts here at BucketList Future School & Holidays.
           </motion.p>
 
           <motion.div

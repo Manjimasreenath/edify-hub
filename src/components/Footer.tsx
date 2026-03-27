@@ -1,4 +1,4 @@
-import { Heart, ArrowUp } from "lucide-react";
+import { ArrowUp } from "lucide-react";
 import { motion } from "framer-motion";
 
 const Footer = () => {
@@ -16,7 +16,7 @@ const Footer = () => {
       <div className="container mx-auto px-4 pt-16 pb-10">
         <div className="grid md:grid-cols-3 gap-10 mb-12">
           <div>
-            <h3 className="text-xl font-bold font-display mb-2">Bucket List</h3>
+            <h3 className="text-xl font-bold font-display mb-2">BucketList</h3>
             <p className="text-sm text-primary-foreground/50 mb-4">Future School & Holidays Pvt. Ltd.</p>
             <p className="text-sm text-primary-foreground/50 leading-relaxed">
               Shaping the next generation of travel professionals and entrepreneurs in Kerala.
@@ -48,9 +48,6 @@ const Footer = () => {
         <div className="border-t border-primary-foreground/10 pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-xs text-primary-foreground/35">
             © {new Date().getFullYear()} Bucketlist Future School & Holidays Pvt. Ltd. All rights reserved.
-          </p>
-          <p className="text-xs text-primary-foreground/35 flex items-center gap-1">
-            Made with <Heart className="w-3 h-3 text-accent fill-accent" /> in Kerala
           </p>
         </div>
       </div>

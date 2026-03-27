@@ -1,6 +1,8 @@
 import { MapPin, Phone, Mail, Globe, Send, MessageCircle } from "lucide-react";
 import { useState } from "react";
 import { motion } from "framer-motion";
+import emailjs from '@emailjs/browser';
+import { toast } from "sonner";
 
 const locations = [
   { name: "Calicut", address: "Opp. Matter Lab Meenchanda, Mini Bypass Rd, Tiruvannur, Kozhikode-673029, Kerala" },
@@ -9,11 +11,35 @@ const locations = [
 
 const ContactSection = () => {
   const [formData, setFormData] = useState({ name: "", phone: "", email: "", program: "", message: "" });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const whatsappMessage = `Hi! I'm ${formData.name}. I'm interested in ${formData.program || "your programs"}. ${formData.message}`;
-    window.open(`https://wa.me/917559944728?text=${encodeURIComponent(whatsappMessage)}`, "_blank");
+    setIsSubmitting(true);
+
+    try {
+      // TODO: Replace with your actual EmailJS Service ID, Template ID, and Public Key
+      await emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        {
+          from_name: formData.name,
+          reply_to: formData.email,
+          phone: formData.phone,
+          program: formData.program,
+          message: formData.message,
+        },
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      );
+
+      toast.success("Enquiry sent successfully! We'll be in touch soon.");
+      setFormData({ name: "", phone: "", email: "", program: "", message: "" });
+    } catch (error) {
+      console.error("EmailJS sending failed:", error);
+      toast.error("Failed to send enquiry. Please try again or contact us via WhatsApp.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const contactInfo = [
@@ -50,13 +76,13 @@ const ContactSection = () => {
           </h2>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
+        <div className="flex justify-center">
           {/* Form */}
           <motion.div
-            className="relative bg-card rounded-3xl p-8 md:p-10 border border-border overflow-hidden"
+            className="relative bg-card rounded-3xl p-8 md:p-10 border border-border overflow-hidden max-w-2xl w-full"
             style={{ boxShadow: "var(--shadow-elevated)" }}
-            initial={{ opacity: 0, x: -40 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.6 }}
           >
@@ -134,23 +160,24 @@ const ContactSection = () => {
               {/* Submit */}
               <motion.button
                 type="submit"
+                disabled={isSubmitting}
                 whileHover={{ scale: 1.02, boxShadow: "var(--shadow-glow)" }}
                 whileTap={{ scale: 0.98 }}
-                className="w-full flex items-center justify-center gap-2.5 bg-primary-gradient text-primary-foreground px-8 py-4 rounded-xl font-semibold text-base transition-all mt-2 group"
+                className="w-full flex items-center justify-center gap-2.5 bg-primary-gradient text-primary-foreground px-8 py-4 rounded-xl font-semibold text-base transition-all mt-2 group disabled:opacity-70 disabled:cursor-not-allowed"
               >
                 <Send className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                Send via WhatsApp
+                {isSubmitting ? "Sending..." : "Send Enquiry"}
               </motion.button>
 
               <p className="text-center text-xs text-muted-foreground/70 mt-2">
-                Your enquiry will be sent securely via WhatsApp
+                Your enquiry will be sent to our admissions team.
               </p>
             </form>
           </motion.div>
 
           {/* Info */}
           <motion.div
-            className="space-y-8"
+            className="space-y-8 hidden"
             initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.2 }}
@@ -201,7 +228,7 @@ const ContactSection = () => {
 
       {/* Floating WhatsApp button */}
       <motion.a
-        href="https://wa.me/917559944728"
+        href="https://wa.me/917559944728?text=Welcome%20to%20Bucketlist%20Future%20School%20%F0%9F%8C%8D%0ADream%20it.%20Explore%20it.%20Achieve%20it.%0AWe%20help%20you%20build%20a%20future%20in%20travel%2C%20tourism%2C%20and%20hospitality%20with%20real-world%20skills%20and%20opportunities."
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-[#25D366] flex items-center justify-center shadow-elevated hover:shadow-glow transition-shadow"

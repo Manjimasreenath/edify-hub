@@ -35,9 +35,9 @@ const Navbar = () => {
     >
       <div className="container mx-auto flex items-center justify-between px-4">
         <a href="#home" className="flex items-center gap-3 group">
-          <img src={logo} alt="Bucket List Future School" className="h-11 w-auto rounded-lg shadow-card" />
+          <img src={logo} alt="BucketList Future School" className="h-11 w-auto rounded-lg shadow-card" />
           <div className="hidden sm:block">
-            <span className="text-primary-foreground font-display font-bold text-base leading-tight block">Bucket List</span>
+            <span className="text-primary-foreground font-display font-bold text-base leading-tight block">BucketList</span>
             <span className="text-primary-foreground/50 text-[10px] tracking-widest uppercase">Future School</span>
           </div>
         </a>

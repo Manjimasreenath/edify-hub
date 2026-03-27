@@ -103,11 +103,10 @@ const ProgramsSection = () => {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-card via-card/20 to-transparent" />
                 <div className="absolute bottom-4 left-6">
-                  <span className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-semibold backdrop-blur-sm ${
-                    program.color === "primary"
-                      ? "bg-primary/90 text-primary-foreground"
-                      : "bg-accent/90 text-accent-foreground"
-                  }`}>
+                  <span className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-semibold backdrop-blur-sm ${program.color === "primary"
+                    ? "bg-primary/90 text-primary-foreground"
+                    : "bg-accent/90 text-accent-foreground"
+                    }`}>
                     <program.icon className="w-4 h-4" />
                     {program.subtitle}
                   </span>
@@ -164,9 +163,8 @@ const ProgramsSection = () => {
                 <motion.a
                   href="#contact"
                   whileHover={{ x: 5 }}
-                  className={`mt-6 inline-flex items-center gap-2 font-semibold transition-colors ${
-                    program.color === "primary" ? "text-primary hover:text-primary/80" : "text-accent hover:text-accent/80"
-                  }`}
+                  className={`mt-6 inline-flex items-center gap-2 font-semibold transition-colors ${program.color === "primary" ? "text-primary hover:text-primary/80" : "text-accent hover:text-accent/80"
+                    }`}
                 >
                   Enquire Now <ArrowRight className="w-4 h-4" />
                 </motion.a>
@@ -186,7 +184,7 @@ const ProgramsSection = () => {
           {/* Decorative rings */}
           <div className="absolute -top-10 -right-10 w-40 h-40 rounded-full border border-primary-foreground/10" />
           <div className="absolute -bottom-10 -left-10 w-32 h-32 rounded-full border border-primary-foreground/10" />
-          
+
           <h3 className="text-2xl md:text-3xl font-bold text-primary-foreground font-display mb-4 relative z-10">
             Complete Your Degree & Masters
           </h3>
